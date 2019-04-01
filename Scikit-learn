@@ -1,0 +1,51 @@
+# Scikit-learn Dataset
+
+# 加载boston房价信息示例
+from sklearn.datasets import load_boston
+data,target = load_boston(return_X_y=True)
+print(data.shape)
+print(target.shape)
+
+# 加载手写数字库
+from sklearn.datastes import load_digits
+import matplotlib.pyplot as plt
+digits = load_digits()
+plt.matshow(digits.images[3])
+plt.show()
+
+# 采用kmeans进行聚类操作，数据为31个身份居民家庭平均支出，包含8个维度数据，对于31个省份进行聚类。
+from sklearn.cluster import KMeans
+from sklearn.datasets import load_iris
+
+if __name__ = '__main__':
+    # import iris data:x is iris feature and y is the class
+    x,y = load_iris(return_X_y=True)
+    # the number clusters is 3
+    km = KMeans(n_clusters = 3,init='K-means++',max_iter=10000)
+    label = km.fit_predict(x)
+    # evaluate the accuracy
+    error_cnt = 0
+    sum_cnt = 0
+    for i in range(len(label)):
+        if (y[i] != label[i]):
+            error_cnt = error_cnt + 1
+        sum_cnt = sum_cnt + 1
+    print("Error rate:%.2f" % (error_cnt/sum_cnt))
+    
+''' 
+kmeans可以用于图像分割，即利用图像分灰度、颜色、纹理、形状等特征将图像分为若干不重叠区域，使这些特征在同一区域具有相似性而不同区域呈现冥想差异性。
+图像分割常用技术包括了阈值分割、边缘分割、直方图法和聚类分析、小波变换等。kmeans分割可以实现图像中相似特征聚类，从而完成分割情况。
+对于同一类采用相同颜色标记，最终可以形成分割图像。实例如下，一个较重要的包为PIL，实例代码如下：
+'''
+import PIL.Image as image
+def loadData(filePath):
+    f = open(filePath,'rb')
+    data = []
+    img = image.open(f)
+    m,n = img.size
+    for i in range(m):
+        for j in range(n):
+            x,y,z = img.getpixel((i,j))
+            data.append([x/256.0,y/256.0,z/256.0]}
+    f.close()
+    return np.mat(data),m,n
